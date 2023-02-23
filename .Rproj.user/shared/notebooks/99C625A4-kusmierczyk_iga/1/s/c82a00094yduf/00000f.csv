@@ -1,0 +1,4 @@
+"0","# Zadanie 2"
+"0","c <- list(employee = c(""Jane B"", ""David G."", ""Emilo A."", ""Janet F."", ""George H.""), salary = c(1000, 2500, 1500,3000,680))"
+"0",""
+"0","as.data.frame(c)"

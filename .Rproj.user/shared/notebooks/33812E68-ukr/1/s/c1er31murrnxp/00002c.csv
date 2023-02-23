@@ -1,0 +1,6 @@
+"0","saveRDS(x = pesel_dt_long[plec != ""ogolem"" & wiek != ""ogolem"", .(n = sum(counts)), .(data)],
+        path = ""~/git/nauka/ncn-foreigners/papers/pan-short/data/status-ukr.rds"")
+"
+"2","Error in saveRDS(x = pesel_dt_long[plec != ""ogolem"" & wiek != ""ogolem"",  : 
+  unused arguments (x = pesel_dt_long[plec != ""ogolem"" & wiek != ""ogolem"", .(n = sum(counts)), .(data)], path = ""~/git/nauka/ncn-foreigners/papers/pan-short/data/status-ukr.rds"")
+"
