@@ -12,3 +12,291 @@
 	doi = {10.5604/01.3001.0013.7589},
 	url = {http://dx.doi.org/10.5604/01.3001.0013.7589}
 }
+
+
+@phdthesis{gerritse2016application,
+  title={An application of population size estimation to official statistics: Sensitivity of model assumptions and the effect of implied coverage},
+  author={Gerritse, Susanna Charlotte},
+  year={2016},
+  school={Utrecht University}
+}
+
+@article{gerritse2015sensitivity,
+  title={Sensitivity of population size estimation for violating parametric assumptions in log-linear models},
+  author={Gerritse, Susanna C and {van der Heijden}, Peter GM and Bakker, Bart FM},
+  journal={Journal of official statistics},
+  volume={31},
+  number={3},
+  pages={357--379},
+  year={2015}
+}
+
+
+@misc{gus-covid-19,
+title = {Populacja cudzoziemców w Polsce w czasie COVID-19},
+author = {{Główny Urząd Statystyczny}},
+year = {2020},
+url = {https://stat.gov.pl/statystyki-eksperymentalne/kapital-ludzki/populacja-cudzoziemcow-w-polsce-w-czasie-covid-19,12,1.html}}
+}
+
+
+@misc{gus-met-2019,
+title = {Cudzoziemcy na krajowym rynku pracy w ujęciu regionalnym},
+author = {{Główny Urząd Statystyczny}},
+year = {2019},
+url = {https://stat.gov.pl/statystyki-eksperymentalne/kapital-ludzki/cudzoziemcy-na-krajowym-rynku-pracy-w-ujeciu-regionalnym,6,1.html}}
+}
+
+
+@misc{kgsg,
+title = {Dane statystyczne dotyczące sytuacji na granicy z Ukrainą. Baza ruchu granicznego (osoby, cudzoziemcy, środki transportu, wszystkie odcinki zewn. granicy) - dane za okres: styczeń - grudzień 2022 r. / dane z ZSE6 / Straż Graniczna},
+author = {{Komenda Główna Straży Granicznej}},
+year = {2023},
+url = {https://dane.gov.pl/pl/dataset/2705,dane-statystyczne-dotyczace-sytuacji-na-granicy-z-Ukraina}}
+}
+
+@misc{kprm,
+title = {Dane statystyczne dot. wniosków o nadanie statusu cudzoziemca UKR w związku z konfliktem na Ukrainie. Szczegółowe statystyki dot. osób zarejestrowanych w rejestrze obywateli Ukrainy i członków ich rodzin, którym nadano status cudzoziemca na podstawie specustawy. Stan na 20.02.2023 r.},
+author = {{Kancelaria Prezesa Rady Ministrów}},
+year = {2023},
+url = {https://dane.gov.pl/pl/dataset/2715,zarejestrowane-wnioski-o-nadanie-statusu-ukr}}
+}
+
+
+@book{golata2018koniec,
+  title={Koniec ery tradycyjnych spis{\'o}w ludno{\'s}ci},
+  author={Go{\l}ata, El{\.z}bieta},
+  year={2018},
+  publisher={Wydawnictwo Uniwersytetu Ekonomicznego w Poznaniu}
+}
+
+@book{wallgren2014register,
+  title={Register-based Statistics: statistical methods for administrative data},
+  author={Wallgren, Britt and Wallgren, Anders},
+  year={2014},
+  publisher={John Wiley \& Sons}
+}
+
+
+@article{jozefowski2010ocena,
+  title={Ocena mo{\.z}liwo{\'s}ci wykorzystania rejestru PESEL w spisie ludno{\'s}ci},
+  author={J{\'o}zefowski, Tomasz and Rynarzewska-Pietrzak, Beata},
+  journal={Zeszyty Naukowe/Uniwersytet Ekonomiczny w Poznaniu},
+  number={149},
+  pages={67--84},
+  year={2010}
+}
+
+
+
+
+@book{analysis2019,
+	title = {Analysis of Integrated Data},
+	editor = {Zhang, Li-Chun and Chambers, Raymond L.},
+	year = {2019},
+	month = {04},
+	date = {2019-04-18},
+	publisher = {Chapman and Hall/CRC},
+	doi = {10.1201/9781315120416},
+	url = {http://dx.doi.org/10.1201/9781315120416}
+}
+
+@book{bohning2018capture,
+  title={Capture-recapture methods for the social and medical sciences},
+  author={B{\"o}hning, Dankmar and Bunge, John and Heijden, Peter GM},
+  year={2018},
+  publisher={CRC Press Boca Raton}
+}
+
+
+@article{brittain2009estimators,
+  title={Estimators in capture--recapture studies with two sources},
+  author={Brittain, Sarah and B{\"o}hning, Dankmar},
+  journal={AStA Advances in Statistical Analysis},
+  volume={93},
+  number={1},
+  pages={23--47},
+  year={2009},
+  publisher={Springer}
+}
+
+
+@article{hand2018statistical,
+  title={Statistical challenges of administrative and transaction data},
+  author={Hand, David J and Babb, Penny and Zhang, Li-Chun and Allin, Paul and Wallgren, Anders and Wallgren, Britt and Blunt, Gordon and Garrett, Andrew and Murtagh, Fionn and Smith, Peter WF and others},
+  journal={Journal of the Royal Statistical Society. Series A (Statistics in Society)},
+  volume={181},
+  number={3},
+  pages={555--605},
+  year={2018},
+  publisher={JSTOR}
+}
+
+
+@article{wolter1986some,
+  title={Some coverage error models for census data},
+  author={Wolter, Kirk M},
+  journal={Journal of the American Statistical Association},
+  volume={81},
+  number={394},
+  pages={337--346},
+  year={1986},
+  publisher={Taylor \& Francis}
+}
+
+
+
+@article{Zhang2019,
+author = {Zhang, Li-chun},
+journal = {Journal of Official Statistics},
+keywords = {administrative data,capture-recapture,coverage error,undercount},
+number = {1},
+pages = {279--283},
+title = {{A Note on Dual System Population Size Estimator}},
+volume = {35},
+year = {2019}
+}
+
+## correlation
+@article{chatterjee2021,
+	title = {On the estimation of population size under dependent dual-record system: an adjusted profile-likelihood approach},
+	author = {Chatterjee, Kiranmoy and Mukherjee, Diganta},
+	year = {2021},
+	month = {09},
+	date = {2021-09-02},
+	journal = {Journal of Statistical Computation and Simulation},
+	pages = {2740--2763},
+	volume = {91},
+	number = {13},
+	doi = {10.1080/00949655.2021.1908284},
+	url = {https://www.tandfonline.com/doi/full/10.1080/00949655.2021.1908284},
+	langid = {en}
+}
+
+@article{nour1982,
+    author = {Nour, El-Sayed},
+    title = {On the Estimation of the Total Number of Vital Events with Data from Dual Collection Systems},
+    journal = {Journal of the Royal Statistical Society: Series A (General)},
+    volume = {145},
+    number = {1},
+    pages = {106-116},
+    keywords = {dual collection systems, 2 times 2 contingency table, chandra-sekar deming technique},
+    doi = {https://doi.org/10.2307/2981424},
+    year = {1982}
+}
+
+@article{Chatterjee2017,
+  title={On the estimation of population size from a post-stratified two-sample capture–recapture data under dependence},
+  author={Kiranmoy Chatterjee and Prajamitra Bhuyan},
+  journal={Journal of Statistical Computation and Simulation},
+  year={2017},
+  volume={90},
+  pages={819 - 838}
+}
+
+@article{chatterjee2019estimation,
+  title={On the estimation of population size from a dependent triple-record system},
+  author={Chatterjee, Kiranmoy and Bhuyan, Prajamitra},
+  journal={Journal of the Royal Statistical Society: Series A (Statistics in Society)},
+  volume={182},
+  number={4},
+  pages={1487--1501},
+  year={2019},
+  publisher={Wiley Online Library}
+}
+
+
+@article{di2018population,
+  title={Population Size Estimation Using Multiple Incomplete Lists with Overcoverage},
+  author={Di Cecco, Davide and Di Zio, Marco and Filipponi, Danila and Rocchetti, Irene},
+  journal={Journal of Official Statistics},
+  volume={34},
+  number={2},
+  pages={557--572},
+  year={2018},
+  publisher={Sciendo}
+}
+
+
+@incollection{di2019capture,
+  title={Capture-recapture methods in the presence of linkage errors},
+  author={Di Consiglio, Loredana and Tuoto, Tiziana and Zhang, Li-Chun},
+  booktitle={Analysis of Integrated Data},
+  pages={39--71},
+  year={2019},
+  publisher={Chapman and Hall/CRC}
+}
+
+
+@article{ding1994,
+	title = {Dual system estimation of Census undercount in the presence of matching error},
+	author = {Ding, Y and Fienberg, SE},
+	year = {1994},
+	date = {1994},
+	journal = {Survey Methodology},
+	pages = {149{\textendash}158},
+	volume = {20},
+	number = {2}
+}
+
+@article{diconsiglio2015,
+	title = {Coverage evaluation on probabilistically linked data},
+	author = {Di Consiglio, Loredana and Tuoto, Tiziana},
+	year = {2015},
+	date = {2015},
+	journal = {Journal of Official Statistics},
+	pages = {415{\textendash}429},
+	volume = {31},
+	number = {3}
+}
+
+
+@article{zhang2017trimmed,
+  title={Trimmed dual system estimation},
+  author={Zhang, Li-Chun and Dunne, John},
+  journal={Capture-recapture methods for the social and medical sciences},
+  pages={237--257},
+  year={2017},
+  publisher={Chapman and Hall/CRC}
+}
+
+@article{daas2015big,
+  title={Big data as a source for official statistics},
+  author={Daas, Piet JH and Puts, Marco J and Buelens, Bart and van den Hurk, Paul AM},
+  journal={Journal of Official Statistics},
+  volume={31},
+  number={2},
+  pages={249--262},
+  year={2015}
+}
+
+@article{tam2015big,
+  title={Big data, official statistics and some initiatives by the Australian Bureau of Statistics},
+  author={Tam, Siu-Ming and Clarke, Frederic},
+  journal={International Statistical Review},
+  volume={83},
+  number={3},
+  pages={436--448},
+  year={2015},
+  publisher={Wiley Online Library}
+}
+
+
+@article{berkesewicz2015big,
+  title={Big data w statystyce publicznej--nadzieje, osi{\k{a}}gni{\k{e}}cia, wyzwania i zagro{\.z}enia},
+  author={Ber{\k{e}}sewicz, Maciej and Szymkowiak, Marcin},
+  journal={Econometrics. Ekonometria. Advances in Applied Data Analytics},
+  volume={2},
+  pages={9--22},
+  year={2015}
+}
+
+
+
+
+@misc{ump,
+title = {3,4 mln Ukraińców w Polsce. Nowy raport Unii Metropolii Polskich},
+author = {{Unia Metropolii Polskich}},
+year = {2022},
+url = {https://metropolie.pl/artykul/34-mln-ukraincow-w-polsce-nowy-raport-unii-metropolii-polskich-1}}
+}

@@ -1,39 +1,4 @@
 {
-    "sources": [
-        {
-            "DOI": "10.5604/01.3001.0013.7589",
-            "URL": "http://dx.doi.org/10.5604/01.3001.0013.7589",
-            "author": [
-                {
-                    "family": "Beręsewicz",
-                    "given": "Maciej"
-                },
-                {
-                    "family": "Gudaszewski",
-                    "given": "Grzegorz"
-                },
-                {
-                    "family": "Szymkowiak",
-                    "given": "Marcin"
-                }
-            ],
-            "container-title": "Wiadomości Statystyczne. The Polish Statistician",
-            "id": "beresewicz2019a",
-            "issue": "10",
-            "issued": {
-                "date-parts": [
-                    [
-                        2019,
-                        10,
-                        28
-                    ]
-                ]
-            },
-            "page": "7-35",
-            "title": "Estymacja liczby cudzoziemców w polsce z wykorzystaniem metody capture-recapture",
-            "type": "article-journal",
-            "volume": "64"
-        }
-    ],
+    "sources": [],
     "project_biblios": []
 }

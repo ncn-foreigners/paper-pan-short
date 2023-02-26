@@ -1,0 +1,355 @@
+---
+title: "Untitled"
+format: html
+editor: visual
+---
+
+```{r}
+library(data.table)
+library(readxl)
+library(ggplot2)
+library(xtable)
+library(vcd)
+library(stringr)
+library()
+theme_set(theme_bw())
+```
+
+Data
+
+```{r}
+dane1 <- read_excel("~/git/zbiory/selectivv/selectivv-cudzoziemcy.xlsx") |> setDT()
+dane2 <- read_excel("~/git/zbiory/selectivv/selectivv-cudzoziemcy.xlsx",sheet=2) |> setDT()
+
+dane1[country %in% c("Ukraina", "Białoruś", "Rosja"), .(total=sum(`N unique users`)), .(period,country)] |> 
+  ggplot(aes(x = period, y = total/1000, group = country, color = country)) +
+  geom_line() +
+  geom_point(data = data.frame(period = rep("2019 Q4", 3),
+                               country = c("Ukraina", "Białoruś", "Rosja"),
+                               total = c(1351418, 105404, 37030))) + 
+  labs(x= "Okres", y= "Liczba cudzoziemców (w tys.)", color = "Kraj pochodzenia") +
+  scale_color_brewer(type="qual", palette = "Dark2") +
+  scale_y_continuous(limits = c(0, 1500)) + 
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) -> p1
+
+saveRDS(p1, "/Users/berenz/git/nauka/ncn-foreigners/papers/pan-short/data/plot-1.rds")
+
+ggsave(plot = p1, file = "../figs/pan-fig1-total.png", width = 10, height = 5)
+
+dane1[country %in% c("Ukraina", "Białoruś", "Rosja"), .(total=sum(`N unique users`)), .(time, period,country)][
+  , time:=factor(time, c("30 dni - 3 miesiące", "3 miesiące - 12 miesięcy", "ponad 12 miesięcy"))] |> 
+  ggplot(aes(x = period, y = total/1000, group = time, color = time)) +
+  geom_line() +
+  labs(x= "Okres", y= "Liczba cudzoziemców (w tys.)", color = "Długość pobytu") +
+  scale_color_brewer(type="qual", palette = "Dark2") +
+  facet_wrap(~country) + 
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) -> p2
+
+ggsave(plot = p2, file = "../figs/pan-fig2-length.png", width = 10, height = 5)
+
+```
+
+```{r}
+dane2[region %in% c("Poznań") & country == c("Ukraina") & 
+        period  != "2021 Q1", .(total = sum(`N unique users`)), .(time, period, country)][
+  , time:=factor(time, c("30 dni - 3 miesiące", "3 miesiące - 12 miesięcy", "ponad 12 miesięcy"))][] |> 
+  ggplot(aes(x = period, y = total/1000, color = time, group = time)) +
+  geom_line() + 
+  geom_point() + 
+  labs(x= "Rok", y= "Liczba cudzoziemców (w tys.)", color = "Długość pobytu") +
+  scale_color_brewer(type="qual", palette = "Dark2")  -> p2
+
+saveRDS(p2, "/Users/berenz/git/nauka/ncn-foreigners/papers/pan-short/data/plot-2.rds")
+```
+
+```{r}
+
+dane2[region %in% c("Poznań") & country == c("Ukraina", "Białoruś", "Inne") & 
+        period  != "2021 Q1", .(total = sum(`N unique users`)), .(time, period, country)][
+  , time:=factor(time, c("30 dni - 3 miesiące", "3 miesiące - 12 miesięcy", "ponad 12 miesięcy"))] |> 
+  ggplot(aes(x = period, y = total, group = time, fill = time)) +
+  geom_col(color = 'black') +
+  labs(x= "Rok", y= "Liczba cudzoziemców", fill = "Długość pobytu") +
+  scale_fill_brewer(type="qual", palette = "Dark2") + 
+  facet_wrap(~country, scales = "free_y") -> p3
+
+
+ggsave(plot = p3, file = "../figs/pan-fig3-poznan.png", width = 10, height = 5)
+```
+
+Porównanie z ZUS
+
+```{r}
+zus_stare <- read_excel("~/git/zbiory/cudzoziemcy/ZUS/zus-polaczone-2016-2018.xlsx") |> setDT()
+zus_nowe <- fread("~/git/zbiory/cudzoziemcy/ZUS/zus-2019-2022-zdr.csv") |> setDT()
+
+zus_plec <- rbind(
+  zus_stare[type == "ZDROWOTNE" & group == "osoby fizyczne" & country %in% c("UKRAIŃSKIE", "BIAŁORUSKIE") & 
+            age == "ogolem" & sex != "ogolem", .(total = number, kwartal = paste0(year,toupper(quarter)), plec = sex, kraj = country)],
+zus_nowe[wiek == "ogol" & plec != "ogol" & obywatelstwo %in% c("UKRAIŃSKIE", "BIAŁORUSKIE"), 
+         .(total = ubezp, kwartal, plec = ifelse(plec == "kob", "kobiety", "mezczyzni"), kraj = obywatelstwo)])
+
+zus_plec[kraj == "BIAŁORUSKIE", kraj := "Białoruś"]
+zus_plec[kraj == "UKRAIŃSKIE", kraj := "Ukraina"]
+zus_plec[plec == "mezczyzni", plec := "Mężczyźni"]
+zus_plec[plec == "kobiety", plec := "Kobiety"]
+zus_plec[, source := "ZUS"]
+
+sel_plec <- dane1[country %in% c("Ukraina", "Białoruś"), .(total=sum(`N unique users`)), 
+                  .(kwartal=gsub(" ", "", period),kraj=country, plec=gender)][, source:="Selectivv"]
+
+sel_zus_plec <- rbind(sel_plec, zus_plec[kwartal %in% unique(sel_plec$kwartal)])
+
+ggplot(data = sel_zus_plec, aes(x = kwartal, y = total/1000, group = source, color = source)) +
+  geom_line() +
+  facet_grid(kraj ~ plec, scales = "free_y") +
+  labs(x= "Okres", y= "Liczba cudzoziemców (w tys.)", color = "Źródło") +
+  scale_color_brewer(type="qual", palette = "Dark2") + 
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) -> p4
+
+ggsave(plot = p4, file = "../figs/pan-fig4-sel-sex.png", width = 10, height = 5)
+
+## mlodzi
+
+sel_mlodzi <- dane1[country %in% c("Ukraina", "Białoruś") & age == "18-24", 
+                  .(total=sum(`N unique users`)), 
+                  .(kwartal=gsub(" ", "", period),kraj=country, plec=gender)][, source:="Selectivv"]
+
+zus_mlodzi <- zus_nowe[wiek %in% c("19", "20-24") & plec != "ogol" & obywatelstwo %in% c("UKRAIŃSKIE", "BIAŁORUSKIE"), 
+         .(total = sum(ubezp)), .(kwartal, plec = ifelse(plec == "kob", "kobiety", "mezczyzni"), kraj = obywatelstwo)]
+
+zus_mlodzi[kraj == "BIAŁORUSKIE", kraj := "Białoruś"]
+zus_mlodzi[kraj == "UKRAIŃSKIE", kraj := "Ukraina"]
+zus_mlodzi[plec == "mezczyzni", plec := "Mężczyźni"]
+zus_mlodzi[plec == "kobiety", plec := "Kobiety"]
+zus_mlodzi[, source := "ZUS"]
+
+sel_zus_wiek <- rbind(sel_mlodzi, zus_mlodzi[kwartal %in% unique(sel_plec$kwartal)], fill = T)
+
+ggplot(data = sel_zus_wiek, aes(x = kwartal, y = total/1000, group = source, color = source)) +
+  geom_line() +
+  facet_grid(kraj ~ plec, scales = "free_y") +
+  labs(x= "Okres", y= "Liczba cudzoziemców (w tys.)", color = "Źródło") +
+  scale_color_brewer(type="qual", palette = "Dark2") + 
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) -> p5
+
+ggsave(plot = p5, file = "../figs/pan-fig5-sel-age.png", width = 10, height = 5)
+
+```
+
+Audit sample
+
+```{r}
+audit <- readRDS("~/git/zbiory/selectivv/proba_final.rds") |> setDT()
+head(audit)
+```
+
+Accuracy
+
+```{r}
+rbind(
+  audit[,.N, .(v=q1, sel=selectivv_country)][, ":="(n=sum(N),accur=N/sum(N)*100), keyby=sel][
+    v == sel, .(Zmienna = "Kraj", Poziomy=v, Trafność=accur,n)],
+  audit[,.N, .(v=q2, sel=selectivv_gender)][, ":="(n=sum(N),accur=N/sum(N)*100), keyby=sel][
+    v == sel, .(Zmienna = "Płec", Poziomy=ifelse(v==0, "Kobieta", "Mężczyzna"), Trafność=accur,n)],
+  audit[,.N, .(v=q3, sel=selectivv_age)][, ":="(n=sum(N),accur=N/sum(N)*100), keyby=sel][
+    v == sel, .(Zmienna = "Wiek", Poziomy=v, Trafność=accur,n)],
+  audit[,.N, .(v=q4, sel=selectivv_length)][, ":="(n=sum(N),accur=N/sum(N)*100), keyby=sel][
+    v == sel, .(Zmienna = "Pobyt", Poziomy=as.character(v), Trafność=accur,n)]
+) |> 
+  xtable(digits = 1) |> 
+  print.xtable(include.rownames = F)
+```
+
+```{r}
+audit[!is.na(selectivv_length),.N, .(v=q4, sel=selectivv_length)] |> xtabs(formula = N~ sel + v) |>
+  xtable()
+
+audit[!is.na(selectivv_length),.N, .(v=q4, sel=selectivv_length)] |> xtabs(formula = N~ sel + v) |>
+  prop.table(margin = 1) |>
+  {\(x) round(x*100,1)}()
+```
+
+```{r}
+rbind(
+  xtabs(~selectivv_country + selectivv_length, audit, subset = selectivv_country != "Polska") |> 
+    assocstats() |> {\(x) c(x$chisq_tests[2,1:3],x$cramer)}(),
+  xtabs(~selectivv_age + selectivv_length, audit, subset = selectivv_country != "Polska") |> 
+    assocstats() |> {\(x) c(x$chisq_tests[2,1:3],x$cramer)}(),
+  xtabs(~selectivv_gender + selectivv_length, audit, subset = selectivv_country != "Polska") |> 
+    assocstats() |> {\(x) c(x$chisq_tests[2,1:3],x$cramer)}(),
+  xtabs(~q1 + selectivv_length, audit, subset = q1 != "Polska") |> 
+    assocstats() |> {\(x) c(x$chisq_tests[2,1:3],x$cramer)}(),
+  xtabs(~q3 + selectivv_length, audit, subset = q1 != "Polska") |> 
+    assocstats() |> {\(x) c(x$chisq_tests[2,1:3],x$cramer)}(),
+    xtabs(~q2 + selectivv_length, audit, subset = q1 != "Polska") |> 
+    assocstats() |> {\(x) c(x$chisq_tests[2,1:3],x$cramer)}()
+) |>
+  xtable(digits = 2) |> 
+  print.xtable(include.rownames = F)
+
+
+```
+
+Korekcja błęd - dwa kroki
+
+-   korekta błędu na zmienne demograficzne
+-   korekta błędu na pobyt
+
+```{r}
+audit_oryg <- audit
+```
+
+```{r}
+audit_error_correct <- list()
+for (i in 1:500) {
+  set.seed(20221107+i)
+  audit <- audit_oryg[sample(1:nrow(audit), nrow(audit), replace = T), ]
+  audit[, .N, keyby=.(sel = paste(selectivv_country, 
+                          selectivv_gender = ifelse(selectivv_gender == 1, "Kobiety", "Mężczyźni"),
+                          selectivv_age),
+                    dekl=paste(q1, q2=ifelse(q2 == 1, "Kobiety", "Mężczyźni"), q3))][
+                      , p:=N/sum(N), sel][] |>
+  dcast(sel ~  dekl, value.var = "p", fill = 0)  -> mat1 
+
+mat1 |> 
+  melt(id.vars = "sel") |>
+  {\(x) x[order(sel,variable)]}() |> 
+  {\(x) x[, .(p=list(value)), keyby=.(sel=sel)]}() -> transtion_mat
+
+sel_example <- dane1[country %in% c("Polska", "Ukraina", "Białoruś"),
+      .(total = sum(`N unique users`)), keyby = .(period, sel = paste(country, gender, age = fcase(age == "18-24", "18_24",
+                                                                                         age == "25-29", "25_29",
+                                                                                         age == "30-39", "30_39",
+                                                                                         default = "40+")))]
+sel_example <- merge(x = sel_example, y = transtion_mat)
+
+
+audit_error_correct[[i]] <- sel_example[, .(m=list(data.frame(dekl = colnames(mat1)[-1], 
+                                                              X1=rmultinom(1, size = total, p = p[[1]])))), .(period,sel)] |> 
+  tidyr::unnest(cols = c(m)) |>
+  setDT() |> 
+  {\(x) x[, lapply(.SD, sum), .(period,dekl), .SDcols = patterns("X\\d{1,}")]}() |>
+  melt(id.vars = c("dekl", "period")) |>
+  {\(x) x[, .(m=mean(value)), .(period,sel=dekl)]}() |>
+  merge(y = sel_example[, .(period, sel, total)]) |>
+  {\(x) x[, c("kraj", "plec", "wiek") := tstrsplit(sel, " ", fixed = T)][
+    , .(po = sum(m), przed = sum(total)), .(period, wiek, kraj, plec)]}()
+}
+
+```
+
+```{r}
+audit_error_correct_dt <- rbindlist(audit_error_correct, idcol = "id")
+```
+
+```{r}
+audit_error_correct_dt[kraj != "Polska", .(m=sum(po), przed = sum(przed)), .(id, period, kraj, plec)][
+  ,.(corr=median(m), corr_low=quantile(m, 0.05), corr_high=quantile(m,0.95), oryg = median(przed)),
+  .(period, kraj,plec)][order(plec, kraj, period)] |>
+  ggplot(aes(x = period, y = corr/1000, ymin = corr_low/1000, ymax=corr_high/1000, group = plec)) +
+  geom_ribbon(alpha = 0.4) +
+  geom_line() +
+  geom_line(aes(y = oryg/1000), color = "red") + 
+  facet_grid(kraj~plec, scales = "free_y") +
+  labs(x = "Kwartał", y = "Liczba cudzoziemców (w tys.)", linetype = "Płeć") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) -> p1
+
+
+audit_error_correct_dt[kraj != "Polska", .(m=sum(po), przed = sum(przed)), .(id, period, kraj, wiek)][
+  ,.(corr=median(m), corr_low=quantile(m, 0.05), corr_high=quantile(m,0.95), oryg = median(przed)),
+  .(period, kraj,wiek)][order(wiek, kraj, period)] |>
+  ggplot(aes(x = period, y = corr/1000, ymin = corr_low/1000, ymax=corr_high/1000, group = wiek)) +
+  geom_ribbon(alpha = 0.4) +
+  geom_line() +
+  geom_line(aes(y = oryg/1000), color = "red") + 
+  facet_grid(kraj~wiek, scales = "free_y") +
+  labs(x = "Kwartał", y = "Liczba cudzoziemców (w tys.)", linetype = "Wiek") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))  -> p2
+
+## bez grupy 40+
+audit_error_correct_dt[kraj != "Polska" & wiek != "40+", .(m=sum(po), przed = sum(przed)), .(id, period, kraj, plec)][
+  ,.(corr=median(m), corr_low=quantile(m, 0.05), corr_high=quantile(m,0.95), oryg = median(przed)),
+  .(period, kraj,plec)][order(plec, kraj, period)] |>
+  ggplot(aes(x = period, y = corr/1000, ymin = corr_low/1000, ymax=corr_high/1000, group = plec)) +
+  geom_ribbon(alpha = 0.4) +
+  geom_line() +
+  geom_line(aes(y = oryg/1000), color = "red") + 
+  facet_grid(kraj~plec, scales = "free_y") +
+  labs(x = "Kwartał", y = "Liczba cudzoziemców (w tys.)", linetype = "Płeć") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) -> p3
+
+
+ggsave(plot = p1, file = "../figs/fig1-correct-plec.png", width=8,height=5)
+ggsave(plot = p2, file = "../figs/fig2-correct-wiek.png", width=8,height=5)
+ggsave(plot = p3, file = "../figs/fig3-correct-plec-40.png", width=8,height=5)
+```
+
+```{r}
+sel_example2 <- dane1[country %in% c("Ukraina", "Białoruś"),
+      .(total = sum(`N unique users`)), keyby = .(time, period, sel = paste(country, gender, age = fcase(age == "18-24", "18_24",
+                                                                                         age == "25-29", "25_29",
+                                                                                         age == "30-39", "30_39",
+                                                                                         default = "40+")))]
+
+sel_example2[, time_share:=total/sum(total), .(period, sel)]
+
+```
+
+```{r}
+audit_stay <- audit_error_correct_dt[kraj != "Polska" & wiek != "40+", .(m=sum(po)), .(id, period, kraj, plec)]
+
+sel_dane_oryg <- dane1[country %in% c("Ukraina", "Białoruś") & age %in% c("18-24", "25-29", "30-39"), .(sel = sum(`N unique users`)),
+      .(period, time, country, gender)][, share:=sel/sum(sel), .(period, country, gender)][, .(period, kraj=country, plec=gender, share, time)]
+
+audit_stay2 <- merge(x = audit_stay,
+                     y = sel_dane_oryg,
+                     all.x=T,
+                     allow.cartesian = T)
+
+audit_stay2[, m_share:=m*share]
+
+audit_stay2[, .(n=sum(m_share)), .(id, period, kraj, time)][, share:=n/sum(n), .(id, period, kraj)][
+  , .(shares = median(share), shares_min = quantile(share, 0.10), shares_max = quantile(share, 0.9)), .(period, kraj, time)] |> 
+  ggplot(aes(x=period, y=shares, color =time, group=time)) +
+  geom_point() +
+  geom_smooth(se= F) + 
+  facet_wrap(~kraj) +
+  scale_color_brewer(type="qual", palette = "Set1") +
+  scale_y_continuous(labels = scales::percent) + 
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
+  labs(x = "Kwartał", y = "Odsetek", color = "Czas pobytu") -> p4
+
+ggsave(plot = p4, file = "../figs/fig4-pobyt.png", width=8,height=5)
+```
+
+```{r}
+dane1[period == "2021 Q4" & country %in% c("Ukraina", "Białoruś") & age %in% c("18-24", "25-29", "30-39"), 
+      .(sel = sum(`N unique users`)), .(time, country)][, share:=sel/sum(sel), country][]
+
+audit_stay2[, .(n=sum(m_share)), .(id, period, kraj, time)][, share:=n/sum(n), .(id, period, kraj)][
+  , .(shares = round(median(share)*100,1)), .(period, kraj, time)][
+    period == "2021 Q1"]
+```
+
+Nowe dane z ZUS
+
+```{r}
+zus <- read_excel("~/git/zbiory/cudzoziemcy/ZUS/US Byd/cudzoziemcy_1_kw_2021.xlsx", skip =4) |> setDT()
+
+zus[Kraj %in% c("Ukraina", "Białoruś") & str_detect(Wiek, "18-19|20-24|30-34|35-39"), .(zus = sum(Ubezpieczeni)), 
+    .(kraj=Kraj, plec =`Płeć`, okres = `Okres podlegania ubezpieczeniu w ZUS`)][, share:=zus/sum(zus)*100, .(kraj, plec)][] 
+
+zus[Kraj %in% c("Ukraina", "Białoruś") & str_detect(Wiek, "18-19|20-24|30-34|35-39"), .(zus = sum(Ubezpieczeni)), 
+    .(kraj=Kraj, plec =`Płeć`)]
+```
+
+```{r}
+dane1[country == "Ukraina" , .(n=sum(`N unique users`)), .(period, wiek = age %in% c("18-24", "25-29", "30-39"))] |>
+  ggplot(aes(x = period, y = n, group = wiek, color  = wiek)) +
+  geom_line()
+```
