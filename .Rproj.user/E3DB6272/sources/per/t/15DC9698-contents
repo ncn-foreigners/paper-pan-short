@@ -2,6 +2,13 @@
 title: "Ilu jest w Polsce cudzoziemców? Ujęcie statystyczne i ekonomiczne"
 author: "Dr Maciej Beręsewicz, prof. UEP"
 format: 
+#  docx: 
+#   fig-width: 8
+#   fig-height: 6 
+#   fig-cap-location: bottom
+#   fig-align: center
+#   fig-format: jpeg 
+#   fig-dpi: 300
   pdf: 
     cite-method: biblatex
 editor: visual
@@ -10,6 +17,7 @@ execute:
   echo: false
   warning: false
   message: false
+  
 fig-width: 8
 fig-height: 6
 fig-cap-location: bottom
@@ -27,6 +35,10 @@ biblatexoptions:
   - uniquelist=false
   - natbib=true
   - backend=biber
+  
+knitr:
+  opts_chunk:
+    fig.path: figs/
 ---
 
 ```{r packages}
@@ -73,8 +85,8 @@ pytanie, jak bliska prawdy jest ta wartość? Jaki wpływ na ten szacunek
 mają błędy nielosowe i w jaki sposób możemy go ewentualnie skorygować?
 Ważna jest również kwestia precyzji uzyskanych szacunków i sposobu jej
 wyznaczania. Z ekonomicznego punktu widzenia kluczowa jest bowiem
-wiarygodność szacunków wskaźników, takich jak stopa bezrobocia czy PKB,
-służy bowiem ona do oceny tego, w jakim stopniu poszerzają one wiedzę
+wiarygodność szacunków wskaźników, takich jak stopa bezrobocia czy PKB.
+Służy ona bowiem do oceny tego, w jakim stopniu poszerzają one wiedzę
 z zakresu sytuacji gospodarczej. Z tej perspektywy istotne jest zatem
 określenie, na ile informacje zawarte w rejestrach administracyjnych są
 wystarczające jako źródło wiedzy. Uzyskanie odpowiedzi na wyżej
@@ -83,17 +95,17 @@ drugiej zaś strony służyć będzie wypracowaniu metodyki estymacji
 charakterystyk populacji cudzoziemców w Polsce, która pozwoli poszerzyć
 wiedzę na temat tej populacji.
 
-Kolejnym wyzwaniem jest określenie wielkości populacji cudzoziemców
-uchodźców w przypadku konfliktów zbrojnych czy katastrof naturalnych. W
-wyniku napaści Rosji na Ukrainę zanotowano ponad 10 mln przekroczeń
-polskiej granicy ze strony Ukrainy [@kgsg], a w szczytowym momencie
-blisko 1,4 mln obywateli Ukrainy korzystało ze specjalnego statusu UKR
-[@kprm], który m.in. umożliwia uzyskanie numeru PESEL, legalny pobyt,
-ułatwienia w kontaktach z urzędami oraz instytucjami państwowymi czy
-wykonywanie pracy. Status UKR zostaje odebrany w momencie przebywania
-poza Polską ponad miesiąc, a określenie faktycznej liczby uchodźców jest
-kluczowe do określenia m.in. populacji rezydującej czyli przebywającej
-ponad 12 miesięcy na terenie Polski.
+Kolejnym wyzwaniem jest określenie wielkości populacji uchodźców
+w przypadku konfliktów zbrojnych czy katastrof naturalnych. W wyniku
+napaści Rosji na Ukrainę zanotowano ponad 10 mln przekroczeń polskiej
+granicy ze strony Ukrainy [@kgsg], a w szczytowym momencie blisko 1,4
+mln obywateli Ukrainy korzystało ze specjalnego statusu UKR [@kprm],
+który m.in. umożliwia uzyskanie numeru PESEL, legalny pobyt, ułatwienia
+w kontaktach z urzędami oraz instytucjami państwowymi czy wykonywanie
+pracy. Status UKR zostaje odebrany w momencie przebywania poza Polską
+ponad miesiąc, a określenie faktycznej liczby uchodźców jest kluczowe do
+określenia m.in. populacji rezydującej, czyli przebywającej ponad 12
+miesięcy na terenie Polski.
 
 Celem niniejszego artykułu jest przedstawienie problemów związanych z
 określeniem liczby cudzoziemców w Polsce w świetle istniejących źródeł
@@ -111,13 +123,13 @@ się podsumowaniem oraz wybraną literaturą.
 cudzoziemców w Polsce na koniec 2015 i 2016r wymieniają następujące
 populacje trudne do zbadania:
 
--   których jednostki trudno wylosować do próby (ang. *hard-to-sample*)
-    -- w przypadku populacji trudnych do zbadania bardzo rzadko zdarza
-    się, aby istniał właściwy operat losowania, z którego jednostki
-    można byłoby wylosować do próby wykorzystując odpowiedni schemat jej
-    pobierania. Przykładem tego typu populacji mogą być osoby bezdomne
-    lub pracujący cudzoziemcy;
--   których jednostki trudno jest zidentyfikować (ang.
+-   te których jednostki trudno wylosować do próby (ang.
+    *hard-to-sample*) -- w przypadku populacji trudnych do zbadania
+    bardzo rzadko zdarza się, aby istniał właściwy operat losowania,
+    z którego jednostki można byłoby wylosować do próby wykorzystując
+    odpowiedni schemat jej pobierania. Przykładem tego typu populacji
+    mogą być osoby bezdomne lub pracujący cudzoziemcy;
+-   te których jednostki trudno jest zidentyfikować (ang.
     *hard-to-identify*) -- w niektórych przypadkach, szczególnie w
     odniesieniu do stygmatyzowanych grup społecznych, członkowie
     populacji mogą nie chcieć udostępnić swoich cech, co wiązać się może
@@ -125,32 +137,32 @@ populacje trudne do zbadania:
     społecznego. Przykład tego typu populacji stanowić mogą narkomani,
     alkoholicy czy różne mniejszości (na przykład osoby LGBT, wyznawcy
     określonych religii czy ideologii);
--   których jednostki trudno znaleźć i nawiązać z nimi kontakt (ang.
+-   te których jednostki trudno znaleźć i nawiązać z nimi kontakt (ang.
     *hard-to-find-and-contact*) -- trudność w nawiązaniu kontaktu
     związana jest przede wszystkim z mobilnością tego typu populacji.
-    Przykładem tego typu populacji mogą być niezameldowani cudzoziemcy,
+    Przykładem takiej populacji mogą być niezameldowani cudzoziemcy,
     członkowie koczowniczych kultur (Beduini z południowo-zachodniej
     Azji czy Tuaregowie z Afryki Północnej), mniejszości wędrowne
-    (Romowie w Europie), osoby bezdomne;\
--   której jednostki trudno namówić do wzięcia udziału w badaniu (ang.
-    *hard-to-persuade*) -- niechęć do wzięcia udziału w badaniu związana
-    może być z drażliwością poruszanej tematyki bądź z brakiem czasu.
-    Przykładem tego typu populacji mogą być aktywni zawodowo, pracujący
-    w szarej czy czarnej strefie, cudzoziemcy;
--   której jednostki można zachęcić do wzięcia udziału w badaniu, ale
+    (Romowie w Europie), osoby bezdomne;
+-   te której jednostki trudno namówić do wzięcia udziału w badaniu
+    (ang. *hard-to-persuade*) -- niechęć do wzięcia udziału w badaniu
+    związana może być z drażliwością poruszanej tematyki, bądź z brakiem
+    czasu. Przykładem tego typu populacji mogą być aktywni zawodowo,
+    pracujący w szarej czy czarnej strefie, cudzoziemcy;
+-   te której jednostki można zachęcić do wzięcia udziału w badaniu, ale
     ciężko przeprowadzić wywiad (ang. *hard-to-interview*) -- trudność w
     przeprowadzeniu wywiadu może wynikać z tego, że należy uzyskać na
     udział w badaniu danej jednostki zgody przełożonego, opiekuna
     prawnego czy rodzica. Przykład tego typu populacji stanowić mogą
-    więźniowie, osoby niepełnosprawne psychicznie czy cudzoziemcy nie
+    więźniowie, osoby niepełnosprawne psychicznie, czy cudzoziemcy nie
     znający języka danego kraju.
 
 Powyższe klasyfikacje odnoszą się do populacji cudzoziemców w Polsce,
 której jednostki trudno wylosować do próby (brak pełnego operatu
 losowania oraz kompleksowych źródeł danych statystycznych, z których
 można czerpać wiedzę na temat cudzoziemców), z którą trudno nawiązać
-kontakt (mobilność cudzoziemców na rynku pracy oraz brak stałego miejsca
-zamieszkania) czy też przeszkodą może być bariera językowa.
+kontakt (mobilność cudzoziemców na rynku pracy, brak stałego miejsca
+zamieszkania, czy też bariera językowa).
 
 W Polsce, w przeciwieństwie do krajów anglosaskich (np. Wielkiej
 Brytanii czy USA), dysponujemy rejestrem populacji (PESEL), który z
@@ -160,7 +172,7 @@ Jednakże, nie wszyscy cudzoziemcy posiadają numer PESEL, a dane
 w rejestrze mogą być nieaktualne. Nawet gdybyśmy dysponowali wieloma
 rejestrami (np. ZUS, NFZ czy Urzędu ds. Cudzoziemców) to pewne
 subpopulacje cudzoziemców będą w nich nieobserwowane m.in.
-krótkookresowi migranci pracujący nielegalnie czy migranci przebywający
+krótkookresowi migranci pracujący nielegalnie, czy migranci przebywający
 na terenie kraju bez ważnych dokumentów umożliwiających pobyt.
 W literaturze przedmiotu proponuje się jednak pewne rozwiązania, które
 stanowić mogą swego rodzaju remedium na problemy związane z określeniem
@@ -182,7 +194,7 @@ zastosowaniach populacyjnych [@wolter1986some]:
     uwzględnienie co najmniej 3 źródeł i/lub estymatorów opracowanych
     dla źródeł zależnych,
 -   *homogeniczność przynależności do rejestrów* -- wykorzystujemy
-    zmienne społeczno-demograficzne i zakładamy homogeniczność w tych
+    zmienne społeczno-demograficzne i zakładamy homogeniczność w tych
     grupach,
 -   *brak błędów łączenia* -- łączymy rejestry po kluczu, ewentualnie
     uwzględniamy błąd wynikający z probabilistycznego łączenia rekordów,
@@ -193,12 +205,12 @@ Należy jednak zaznaczyć, że istnieje wiele metod, które uwzględniają
 złamanie tych założeń. W szczególności należy tutaj wymienić:
 @Zhang2019, który rozważa przypadek rejestru administracyjnego oraz
 pospisowego badania kontrolnego (ang. *post-enumeration survey*)
-ograniczając wymienione założenia, @nour1982, @wolter1986some,
-@Chatterjee2017, @chatterjee2021, @chatterjee2019estimation, którzy
-rozważają przypadek dwóch lub więcej skorelowanych zmiennych czy
-@ding1994, @diconsiglio2015, @di2018population, @di2019capture, którzy
-uwzględniają błędy łączenia między rejestrami w estymacji wielkości
-populacji.
+ograniczając wymienione założenia, jak również @nour1982,
+@wolter1986some, @Chatterjee2017, @chatterjee2021,
+@chatterjee2019estimation, którzy rozważają przypadek dwóch lub więcej
+skorelowanych zmiennych czy też @ding1994, @diconsiglio2015,
+@di2018population, @di2019capture, którzy uwzględniają błędy łączenia
+między rejestrami w estymacji wielkości populacji.
 
 W najprostszym przypadku, gdy dysponujemy dwoma źródłami danych i
 wszystkie powyższe założenia są spełnione, do oszacowania wielkości
@@ -214,7 +226,7 @@ drugiego źródła, a $m$ będzie częścią wspólną obydwu źródeł (por.
 
 Przykładowo, @gerritse2015sensitivity, @gerritse2016application
 zastosowali metodę CR do oszacowania liczby obywateli Polski
-przebywających w Holandii w 2009 roku. W tym celu wykorzystała dwa
+przebywających w Holandii w 2009 roku. W tym celu wykorzystali dwa
 źródła danych: Rejestr Populacji (*Gemeentelijke BasisAdministratie*;
 GBA) oraz rejestr Policji (*HerKenningsdienst Systeem*; HKS) uzyskując
 następującą poniższą tablicę
@@ -243,36 +255,38 @@ przekazanie identyfikowalnych danych z KSIP Głównemu Urzędowi
 Statystycznemu. Jedyną możliwością zastosowania metod CR jest
 wykorzystanie i zintegrowanie wszelkich dostępnych źródeł
 administracyjnych, a następnie zastosowania zaproponowanych w
-literaturze rozwiązań z zakresu CR. Pewnych sugestii jak można tego
+literaturze rozwiązań z zakresu CR. Pewne sugestie, jak można tego
 dokonać przedstawili @zhang2017trimmed, którzy dokonali szacunku
-wielkości populacji w Irlandii, która nie posiada odpowiednika rejestru
-PESEL. Wykorzystali w tym *Person Activity Register* (PAR), który składa
-się z 10 zintegrowanych rejestrów w celu określenia aktywności ludności
-(tzw. śladów życia; ang. *signs-of-life*) oraz rejestr praw jazdy (RPJ).
-Jako drugie źródło w metodzie CR wykorzystali fakt odnawiania praw jazdy
-lub ubieganie się o nowe w danym roku na podstawie RPJ.
+wielkości populacji w Irlandii nie posiadając odpowiednika rejestru
+PESEL. Wykorzystali w tym celu *Person Activity Register* (PAR), który
+składa się z 10 zintegrowanych rejestrów do określenia aktywności
+ludności (tzw. śladów życia; ang. *signs-of-life*) oraz rejestr praw
+jazdy (RPJ). Jako drugie źródło w metodzie CR wykorzystali fakt
+odnawiania praw jazdy lub ubieganie się o nowe w danym roku na podstawie
+RPJ.
 
 Zastosowanie tego podejścia w praktyce jest ściśle związane z jakością
-danych administracyjnych, a błędy pokrycia czy łączenia będą przekładały
-się na obciążenie szacunków. Kluczowe jest również porównanie uzyskanych
-szacunków z wszelkimi dostępnymi źródłami danych zarówno tymi ze
-statystyki publicznej (jak spisy) jak i spoza (np. big data).
+danych administracyjnych, a błędy pokrycia czy też łączenia będą
+przekładały się na obciążenie szacunków. Kluczowe jest również
+porównanie uzyskanych szacunków z wszelkimi dostępnymi źródłami danych
+zarówno tymi ze statystyki publicznej (jak spisy), jak i spoza (np. big
+data).
 
 # Populacja cudzoziemców w Polsce w świetle dostępnych danych {#sec-populacja}
 
 ## Rejestry administracyjne {#sec-gus-rejestry}
 
-Zgodnie z wiedzą autora, jedynym opracowaniem zawierającym pewną ocenę
-rejestrów administracyjnych w odniesieniu do populacji cudzoziemców jest
-wspominana praca eksperymentalna @gus-covid-19. Wcześniejsze szacunki
-wykorzystujące metodę CR w Polsce zawarte były w pracy metodologicznej
-pt. ,,Cudzoziemcy na krajowym rynku pracy w ujęciu regionalnym''
-[@gus-met-2019] oraz publikacji @beresewicz2019a.
+Zgodnie z wiedzą autora, jedynym opracowaniem zawierającym ocenę
+polskich rejestrów administracyjnych w odniesieniu do populacji
+cudzoziemców jest wspominana praca eksperymentalna @gus-covid-19.
+Wcześniejsze szacunki wykorzystujące metodę CR w Polsce zawarte były w
+pracy metodologicznej pt. ,,Cudzoziemcy na krajowym rynku pracy w ujęciu
+regionalnym'' [@gus-met-2019] oraz publikacji @beresewicz2019a.
 
 W tej pracy @gus-covid-19 zespół GUS podjął problem wyznaczenia
 populacji cudzoziemców na podstawie zintegrowanych rejestrów
 administracyjnych oszacowując, że na koniec grudnia 2019 roku w Polsce
-przebywało 2,1 mln cudzoziemców z czego obywatele Ukrainy, Białorusi
+przebywało 2,1 mln cudzoziemców, z czego obywatele Ukrainy, Białorusi
 oraz Rosji stanowili odpowiednio: 1 351 tys., 105 tys. oraz 37 tys.
 
 Integracji danych dokonano z wykorzystaniem identyfikatorów tj. numerów
@@ -330,12 +344,12 @@ Rysunek [-@fig-ukr-status] przedstawia liczbę cudzoziemców posiadających
 status UKR (w tys.) w okresie od 14 kwietnia 2022 do 21 lutego 2023.
 Początkowa liczba wynosiła ponad 908,5 tys. a końcowa 986 tys.
 W szczytowym monecie (6 października 2020) liczba osób ze statusem UKR
-wynosiła blisko 1,4 mln. Gwałtowny spadek związany jest m.in. wyjazdami
+wynosiła blisko 1,4 mln. Gwałtowny spadek związany jest m.in.
 z rozpoczęciem roku szkolnego oraz innymi przyczynami, a opóźnienie
 w raportowaniu wskazuje na znaczną zmianę w październiku oraz
 listopadzie. Widać także lekki wzrost liczby osób ze statusem UKR w
-2023r. ale dostępne dane nie pozwalają określić czy są to osoby nowe czy
-uzyskujące status UKR po raz kolejny.
+2023r., ale dostępne dane nie pozwalają określić, czy są to osoby nowe
+czy uzyskujące status UKR po raz kolejny.
 
 ```{r ukr-status}
 #| label: fig-ukr-status
@@ -356,9 +370,9 @@ ukr |>
 
 Jeżeli rejestry administracyjne mają zastąpić spisy powszechne to ocena
 ich jakości oraz integracja nie tylko z wykorzystaniem numeru PESEL jest
-kluczowa. Należy jednak pamiętać, że uzyskane wyniki być porównywalne w
-czasie dlatego należy również odnieść się do wyników najnowszego spisu z
-marca 2021 roku.
+kluczowa. Należy jednak pamiętać, że uzyskane wyniki mogą być
+porównywalne w czasie, dlatego należy również odnieść się do wyników
+najnowszego spisu z marca 2021 roku.
 
 ## Narodowy Spis Powszechny Ludności i Mieszkań 2021
 
@@ -416,7 +430,7 @@ nsp_cudz_ogol  |>
 zgodnie ze stanem na 23.02.2023).
 
 Dane z NSP 2021 mogą nam ukazać pewne zależności, które występowały w
-marcu 2021 ale po rozpoczęciu agresji Rosji na Ukrainę 24 lutego 2022 i
+marcu 2021, ale po rozpoczęciu agresji Rosji na Ukrainę 24 lutego 2022 i
 fali migracji uchodźców, liczby te zdecydowanie różnią się od bieżącej
 sytuacji.
 
@@ -428,11 +442,11 @@ sytuacji.
 ## Źródła big data
 
 Statystyka publiczna coraz częściej sięga po alternatywne, do rejestrów
-administracyjnych, źródła danych, które w można zdefiniować jako big
-data [@daas2015big; @tam2015big; @berkesewicz2015big]. Dotyczy to
-głównie wykorzystania danych pochodzących z różnych systemów
-informacyjnych sieci telekomunikacyjnych, nadzoru ruchu drogowego
-i wodnego czy aktywności ludności i podmiotów gospodarczych w sieci.
+administracyjnych, źródła danych, które można zdefiniować jako big data
+[@daas2015big; @tam2015big; @berkesewicz2015big]. Dotyczy to głównie
+wykorzystania danych pochodzących z różnych systemów informacyjnych
+sieci telekomunikacyjnych, nadzoru ruchu drogowego i wodnego, czy
+aktywności ludności i podmiotów gospodarczych w sieci.
 
 Pomimo istotnej przewagi źródeł big data nad rejestrami
 administracyjnymi w kontekście aktualności i automatycznego sposobu
@@ -443,17 +457,21 @@ pozostają te same: błędy pokrycia oraz pomiaru. Aby móc wykorzystać te
 W tej sekcji przedstawione zostaną dane pochodzące od firmy
 Selectivv[^2], która działa na polskim i międzynarodowym rynku mobilnej
 reklamy internetowej tzw. reklamy programatycznej (ang. *programmatic
-advertisement*). W skrócie polega ona na dobraniu odpowiedniej informacji
-dla danego użytkownika smartfona na podstawie zebranych o nim informacji
-takich jak zainstalowane aplikacje, system operacyjny, marka smartfona,
-geolokalizacja czy, o ile takie informacje są dostępne, cech
+advertisement*). W skrócie polega ona na dobraniu odpowiedniej
+informacji dla danego użytkownika smartfona na podstawie zebranych o nim
+informacji takich, jak zainstalowane aplikacje, system operacyjny, marka
+smartfona, geolokalizacja czy, o ile takie informacje są dostępne, cech
 społeczno-demograficznych. Firma Selectivv zbiera informacje o ponad 30
 mln użytkowników smartfonów w Polsce, z czego w swojej bazie miała w
 latach 2018-2021 ponad 1,2 mln ,,obywateli Ukrainy", 50 tys. ,,obywateli
 Białorusi'' oraz blisko 200 tys. ,,obywateli Rosji". Użycie cudzysłowu
 służy podkreśleniu faktu, że informacje dotyczące obywatelstwa są
 ustalane na podstawie określonych reguł decyzyjnych oraz algorytmów,
-które biorą pod uwagę język systemu telefonu oraz dane geolokalizacyjne. Dane Selectivv były wykorzystane m.in. w raporcie Unii Metropolii Polskich [-@ump] do określenia liczby Ukraińców w marcu i maju 2022, która wynosiła odpowiednio 3,85 i 3,37 mln osób, a w samych 12 największych polskich miastach 1,43 mln.
+które biorą pod uwagę język systemu telefonu oraz dane geolokalizacyjne.
+Dane Selectivv były wykorzystane m.in. w raporcie Unii Metropolii
+Polskich [-@ump] do określenia liczby Ukraińców w marcu i maju 2022,
+która wynosiła odpowiednio 3,85 i 3,37 mln osób, a w samych 12
+największych polskich miastach 1,43 mln.
 
 Rysunek [-@fig-ukr-big-data1] przedstawia liczbę cudzoziemców określoną
 na podstawie danych ze smartfonów między 2018 i 2021 rokiem, a kropka
@@ -480,7 +498,7 @@ podstawie danych ze smarfonów według długości pobytu w Poznaniu w latach
 Ukrainy" wynosiła blisko 45 tys. z czego 13 tys. przebywało od 30 do 3
 miesięcy, 17 tys. od 3 miesięcy do 12, a blisko 14 tys. ponad 12
 miesięcy. Liczba ta spadła w 2019 roku do 38 tys., a w kolejnych wzrosła
-do blisko 51 tys. Zgodnie z tymi danymi za smartfonów struktura pobytu
+do blisko 51 tys. Zgodnie z tymi danymi ze smartfonów struktura pobytu
 ,,obywateli Ukrainy'' była stała i wynosiła około 30% dla pobytu ponad
 12 miesięcy i 60% dla pobytów krótszych.
 
